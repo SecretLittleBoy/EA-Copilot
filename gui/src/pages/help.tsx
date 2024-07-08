@@ -93,7 +93,7 @@ function HelpPage() {
         View My Usage
       </h3>
       <Hr className="my-0" />
-      <h3 className="my-3 mx-auto text-center">Resources</h3>
+      {/* <h3 className="my-3 mx-auto text-center">Resources</h3>
       <ResourcesDiv className="border">
         <IconDiv backgroundColor="rgb(234, 51, 35)">
           <a
@@ -160,7 +160,7 @@ function HelpPage() {
             GitHub Issues
           </a>
         </IconDiv>
-      </ResourcesDiv>
+      </ResourcesDiv> */}
 
       <KeyboardShortcutsDialog />
     </div>

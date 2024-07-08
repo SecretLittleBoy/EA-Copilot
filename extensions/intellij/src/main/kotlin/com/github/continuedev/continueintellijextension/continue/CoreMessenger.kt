@@ -34,13 +34,6 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
         }
     }
 
-    private fun close() {
-        writer?.close()
-        reader?.close()
-        val exitCode = process?.waitFor()
-        println("Subprocess exited with code: $exitCode")
-    }
-
     fun request(messageType: String, data: Any?, messageId: String?, onResponse: (Any?) -> Unit) {
         val id = messageId ?: uuid()
         val message = gson.toJson(mapOf(
@@ -99,7 +92,6 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
             } else {
                 responseListeners.remove(messageId)
             }
-
         }
     }
 
@@ -167,7 +159,7 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
                     destination
             ).start()
             setFilePermissions(destination, "rwxr-xr-x")
-        } else if (osName.contains("nix") || osName.contains("nux") || osName.contains("mac")) {
+        } else if (osName.contains("nix") || osName.contains("nux")) {
             setFilePermissions(destination, "rwxr-xr-x")
         }
     }

@@ -150,7 +150,7 @@ const IndexingProgressBar = ({
             color={STATUS_COLORS.LOADING}
             shouldBlink={true}
           ></BlinkingDot>
-          <StatusHeading>Continue is initializing</StatusHeading>
+          <StatusHeading>EA Copilot is initializing</StatusHeading>
         </FlexDiv>
       ) : indexingState.status === "done" ? (
         <FlexDiv data-tooltip-id="indexingDone_dot">
