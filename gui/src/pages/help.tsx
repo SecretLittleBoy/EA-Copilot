@@ -77,7 +77,7 @@ function HelpPage() {
         <TutorialButton
           onClick={() => {
             ideMessenger.post("showTutorial", undefined);
-            navigate("/onboarding");
+            // navigate("/onboarding");
           }}
         >
           Open tutorial

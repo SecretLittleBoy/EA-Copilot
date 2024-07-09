@@ -281,7 +281,7 @@ const Layout = () => {
               </HeaderButtonWithText>
               <HeaderButtonWithText
                 onClick={() => {
-                  // navigate("/settings");
+                  navigate("/onboarding");
                   ideMessenger.post("openConfigJson", undefined);
                 }}
                 text="Configure EA Copilot"
