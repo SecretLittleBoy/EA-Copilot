@@ -30,6 +30,7 @@ describe("IDE Utils", () => {
     assert(utils.getAbsolutePath(groundTruth) === groundTruth);
   });
 
+<<<<<<< HEAD
   test("getDirectoryContents", async () => {
     let dirContents = await utils.getDirectoryContents(
       testWorkspacePath,
@@ -50,6 +51,8 @@ describe("IDE Utils", () => {
     // assert(dirContents.find((f) => f.endsWith("test.js")) !== undefined);
   });
 
+=======
+>>>>>>> origin/main
   test("getOpenFiles", async () => {
     let openFiles = utils.getOpenFiles();
     assert(openFiles.length === 0);

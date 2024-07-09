@@ -71,12 +71,20 @@ function Onboarding() {
   return (
     <div className="max-w-96  mx-auto leading-normal">
       <div className="leading-relaxed">
+<<<<<<< HEAD
         <h1 className="text-center">Welcome to EA Copilot</h1>
+=======
+        <h1 className="text-center">Welcome to Continue</h1>
+>>>>>>> origin/main
         <p className="text-center ">
           Let's find the setup that works best for you. You can update your
           configuration after onboarding by clicking the
           <Cog6ToothIcon className="inline-block h-5 w-5 align-middle px-1" />
+<<<<<<< HEAD
           icon in the bottom-right corner of EA Copilot.
+=======
+          icon in the bottom-right corner of Continue.
+>>>>>>> origin/main
         </p>
       </div>
 

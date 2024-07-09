@@ -1,7 +1,7 @@
 {
   "name": "continue",
   "icon": "media/icon.png",
-  "version": "0.8.51",
+  "version": "0.8.43",
   "repository": {
     "type": "git",
     "url": "https://github.com/continuedev/continue"
@@ -31,6 +31,8 @@
     "theme": "dark"
   },
   "categories": [
+    "AI",
+    "Chat",
     "Programming Languages",
     "Education",
     "Machine Learning",
@@ -77,10 +79,15 @@
           "default": true,
           "description": "Show inline suggestion to use the Continue keyboard shortcuts (e.g. \"Cmd/Ctrl L to select code, Cmd/Ctrl I to edit\")."
         },
+        "continue.enableQuickActions": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Enable the experimental Quick Actions feature. Read our walkthrough to learn about configuration and how to share feedback: [continue.dev › Walkthrough: Quick Actions (experimental)](https://docs.continue.dev/walkthroughs/quick-actions)"
+        },
         "continue.enableTabAutocomplete": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Enable Continue's tab autocomplete feature. Read our walkthrough to learn about configuration and how to share feedback: [continue.dev › Walkthrough: Tab Autocomplete](https://docs.continue.dev/walkthroughs/tab-autocomplete)"
+          "markdownDescription": "Enable Continue's tab autocomplete feature. Read our walkthrough to learn about configuration and how to share feedback: [continue.dev › Walkthrough: Tab Autocomplete (beta)](https://docs.continue.dev/walkthroughs/tab-autocomplete)"
         },
         "continue.pauseTabAutocompleteOnBattery": {
           "type": "boolean",
@@ -134,12 +141,6 @@
         "command": "continue.quickEdit",
         "category": "Continue",
         "title": "Generate Code",
-        "group": "Continue"
-      },
-      {
-        "command": "continue.toggleAuxiliaryBar",
-        "category": "Continue",
-        "title": "Toggle Right Sidebar",
         "group": "Continue"
       },
       {
@@ -228,6 +229,18 @@
         "category": "Continue",
         "title": "Fix Grammar / Spelling",
         "group": "Continue"
+      },
+      {
+        "command": "continue.quickEditHistoryUp",
+        "category": "Continue",
+        "title": "Quick Edit History Up",
+        "group": "Continue"
+      },
+      {
+        "command": "continue.quickEditHistoryDown",
+        "category": "Continue",
+        "title": "Quick Edit History Down",
+        "group": "Continue"
       }
     ],
     "keybindings": [
@@ -240,6 +253,11 @@
         "command": "continue.focusContinueInputWithoutClear",
         "mac": "cmd+shift+l",
         "key": "ctrl+shift+l"
+      },
+      {
+        "command": "continue.toggleAuxiliaryBar",
+        "mac": "alt+cmd+l",
+        "key": "alt+ctrl+l"
       },
       {
         "command": "continue.acceptDiff",
@@ -258,6 +276,18 @@
         "when": "continue.diffVisible"
       },
       {
+        "command": "continue.quickEditHistoryUp",
+        "mac": "up",
+        "key": "up",
+        "when": "false && continue.quickEditHistoryFocused"
+      },
+      {
+        "command": "continue.quickEditHistoryDown",
+        "mac": "down",
+        "key": "down",
+        "when": "false && continue.quickEditHistoryFocused"
+      },
+      {
         "command": "continue.acceptVerticalDiffBlock",
         "mac": "alt+cmd+y",
         "key": "alt+ctrl+y"
@@ -273,11 +303,6 @@
         "key": "ctrl+i"
       },
       {
-        "command": "continue.toggleAuxiliaryBar",
-        "mac": "alt+cmd+l",
-        "key": "alt+ctrl+l"
-      },
-      {
         "command": "continue.debugTerminal",
         "mac": "cmd+shift+r",
         "key": "ctrl+shift+r"
@@ -291,7 +316,8 @@
       {
         "command": "continue.toggleTabAutocompleteEnabled",
         "mac": "cmd+k cmd+a",
-        "key": "ctrl+k ctrl+a"
+        "key": "ctrl+k ctrl+a",
+        "when": "!terminalFocus"
       }
     ],
     "submenus": [
@@ -304,9 +330,6 @@
       "commandPalette": [
         {
           "command": "continue.quickEdit"
-        },
-        {
-          "command": "continue.toggleAuxiliaryBar"
         },
         {
           "command": "continue.focusContinueInput"

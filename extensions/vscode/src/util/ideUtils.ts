@@ -1,5 +1,4 @@
 import type { FileEdit, RangeInFile, Thread } from "core";
-import { defaultIgnoreFile } from "core/indexing/ignore";
 import path from "node:path";
 import * as vscode from "vscode";
 import { threadStopped } from "../debug/debug";
@@ -12,7 +11,6 @@ import {
   rejectSuggestionCommand,
   showSuggestion as showSuggestionInEditor,
 } from "../suggestions";
-import { traverseDirectory } from "./traverseDirectory";
 import {
   getUniqueId,
   openEditorAndRevealRange,
@@ -263,6 +261,7 @@ export class VsCodeIdeUtils {
   get path(): path.PlatformPath {
     if (this._cachedPath) {
       return this._cachedPath;
+<<<<<<< HEAD
     }
 
     // Return "path" module for either windows or posix depending on sample workspace folder path format
@@ -344,6 +343,19 @@ export class VsCodeIdeUtils {
       allFiles.push(file);
     }
     return allFiles;
+=======
+    }
+
+    // Return "path" module for either windows or posix depending on sample workspace folder path format
+    const sampleWorkspaceFolder =
+      vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+    const isWindows = sampleWorkspaceFolder
+      ? !sampleWorkspaceFolder.startsWith("/")
+      : false;
+
+    this._cachedPath = isWindows ? path.win32 : path.posix;
+    return this._cachedPath;
+>>>>>>> origin/main
   }
 
   getAbsolutePath(filepath: string): string {
