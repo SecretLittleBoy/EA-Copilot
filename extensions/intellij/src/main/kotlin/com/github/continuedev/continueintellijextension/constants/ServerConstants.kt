@@ -90,6 +90,11 @@ fun getConfigJsonPath(): String {
     return path.toString()
 }
 
+fun getEACopilotTutorialPath(): String {
+    val path = Paths.get(getContinueGlobalPath(), "EA_Copilot_tutorial.py")
+    return path.toString()
+}
+
 fun getConfigJsPath(): String {
     val path = Paths.get(getContinueGlobalPath(), "config.js")
     if (Files.notExists(path)) {

@@ -11,13 +11,11 @@ import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.EditorFactory
-import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.keymap.KeymapManager
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.StartupActivity
 import com.intellij.openapi.util.io.StreamUtil
-import com.intellij.openapi.vfs.LocalFileSystem
 import kotlinx.coroutines.*
 import java.io.*
 import java.nio.charset.StandardCharsets
@@ -27,7 +25,7 @@ import javax.swing.*
 import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.extensions.PluginId
 
-fun showTutorial(project: Project) {
+fun flushTutorial(project: Project) {
     ContinuePluginStartupActivity::class.java.getClassLoader().getResourceAsStream("EA_Copilot_tutorial.py").use { `is` ->
         if (`is` == null) {
             throw IOException("Resource not found: EA_Copilot_tutorial.py")
@@ -38,14 +36,6 @@ fun showTutorial(project: Project) {
         }
         val filepath = Paths.get(getContinueGlobalPath(), "EA_Copilot_tutorial.py").toString()
         File(filepath).writeText(content)
-        val virtualFile = LocalFileSystem.getInstance().findFileByPath(filepath)
-
-
-        ApplicationManager.getApplication().invokeLater {
-            if (virtualFile != null) {
-                FileEditorManager.getInstance(project).openFile(virtualFile, true)
-            }
-        }
     }
 }
 
@@ -105,7 +95,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
             if (!settings.continueState.shownWelcomeDialog) {
                 settings.continueState.shownWelcomeDialog = true
                 // Open EA_Copilot_tutorial.py
-                showTutorial(project)
+                flushTutorial(project)
             }
 
             val ideProtocolClient = IdeProtocolClient(

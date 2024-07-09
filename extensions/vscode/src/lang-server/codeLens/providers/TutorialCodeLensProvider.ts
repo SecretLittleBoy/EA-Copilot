@@ -9,7 +9,7 @@ interface TutorialCodeLensItems {
   commands: vscode.Command[];
 }
 
-const TUTORIAL_FILE_NAME = "continue_tutorial.py";
+const TUTORIAL_FILE_NAME = "EA_Copilot_tutorial.py";
 
 const cmdCtrl = getPlatform() === "mac" ? "Cmd" : "Ctrl";
 
@@ -57,7 +57,7 @@ const actions: TutorialCodeLensItems[] = [
         arguments: [
           `python ${path.join(
             getExtensionUri().fsPath,
-            "continue_tutorial.py",
+            "EA_Copilot_tutorial.py",
           )}\n`,
         ],
       },

@@ -154,7 +154,7 @@ export class VsCodeMessenger {
     this.onWebview("showTutorial", async (msg) => {
       const tutorialPath = path.join(
         getExtensionUri().fsPath,
-        "continue_tutorial.py",
+        "EA_Copilot_tutorial.py",
       );
       // Ensure keyboard shortcuts match OS
       if (process.platform !== "darwin") {
