@@ -34,6 +34,13 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
         }
     }
 
+    private fun close() {
+        writer?.close()
+        reader?.close()
+        val exitCode = process?.waitFor()
+        println("Subprocess exited with code: $exitCode")
+    }
+
     fun request(messageType: String, data: Any?, messageId: String?, onResponse: (Any?) -> Unit) {
         val id = messageId ?: uuid()
         val message = gson.toJson(mapOf(

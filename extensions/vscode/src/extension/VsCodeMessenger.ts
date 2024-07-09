@@ -19,7 +19,6 @@ import {
   ToCoreOrIdeFromWebviewProtocol,
   VsCodeWebviewProtocol,
 } from "../webviewProtocol";
-import { ConfigHandler } from "core/config/handler";
 
 /**
  * A shared messenger class between Core and Webview

@@ -597,13 +597,9 @@ function TipTapEditor(props: TipTapEditorProps) {
           rif.filepath,
           await ideMessenger.ide.getWorkspaceDirs(),
         );
-<<<<<<< HEAD
-        const rangeStr = `(${rif.range.start.line + 1}-${rif.range.end.line + 1})`;
-=======
         const rangeStr = `(${rif.range.start.line + 1}-${
           rif.range.end.line + 1
         })`;
->>>>>>> origin/main
         const item: ContextItemWithId = {
           content: rif.contents,
           name: `${basename} ${rangeStr}`,

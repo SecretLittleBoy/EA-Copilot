@@ -7,11 +7,7 @@ import { StyledTooltip, lightGray, vscForeground } from "..";
 import { IdeMessengerContext } from "../../context/IdeMessenger";
 import { RootState } from "../../redux/store";
 import { getFontSize, isJetBrains } from "../../util";
-<<<<<<< HEAD
-import BlinkingDot from "./BlinkingDot";
-=======
 import StatusDot from "./StatusDot";
->>>>>>> origin/main
 
 const STATUS_COLORS = {
   DISABLED: lightGray, // light gray
@@ -135,11 +131,7 @@ const IndexingProgressBar = ({
     >
       {indexingState.status === "failed" ? (
         <FlexDiv data-tooltip-id="indexingFailed_dot">
-<<<<<<< HEAD
-          <BlinkingDot color={STATUS_COLORS.FAILED}></BlinkingDot>
-=======
           <StatusDot color={STATUS_COLORS.FAILED}></StatusDot>
->>>>>>> origin/main
           <div>
             <StatusHeading>Indexing error! Click to retry</StatusHeading>
             <StatusInfo>{getIndexingErrMsg(indexingState.desc)}</StatusInfo>
@@ -154,24 +146,12 @@ const IndexingProgressBar = ({
         </FlexDiv>
       ) : indexingState.status === "loading" ? (
         <FlexDiv>
-<<<<<<< HEAD
-          <BlinkingDot
-            color={STATUS_COLORS.LOADING}
-            shouldBlink={true}
-          ></BlinkingDot>
-          <StatusHeading>EA Copilot is initializing</StatusHeading>
-        </FlexDiv>
-      ) : indexingState.status === "done" ? (
-        <FlexDiv data-tooltip-id="indexingDone_dot">
-          <BlinkingDot color={STATUS_COLORS.DONE}></BlinkingDot>
-=======
           <StatusDot shouldBlink color={STATUS_COLORS.LOADING}></StatusDot>
           <StatusHeading>Continue is initializing</StatusHeading>
         </FlexDiv>
       ) : indexingState.status === "done" ? (
         <FlexDiv data-tooltip-id="indexingDone_dot">
           <StatusDot color={STATUS_COLORS.DONE}></StatusDot>
->>>>>>> origin/main
           <div>
             <StatusHeading>Index up to date</StatusHeading>
           </div>
@@ -186,11 +166,6 @@ const IndexingProgressBar = ({
             )}
         </FlexDiv>
       ) : indexingState.status === "disabled" ? (
-<<<<<<< HEAD
-        <FlexDiv>
-          <BlinkingDot color={STATUS_COLORS.DISABLED}></BlinkingDot>
-          <StatusHeading>{indexingState.desc}</StatusHeading>
-=======
         <FlexDiv data-tooltip-id="indexingDisabled_dot">
           <StatusDot color={STATUS_COLORS.DISABLED}></StatusDot>
           {tooltipPortalDiv &&
@@ -200,25 +175,16 @@ const IndexingProgressBar = ({
               </StyledTooltip>,
               tooltipPortalDiv,
             )}
->>>>>>> origin/main
         </FlexDiv>
       ) : indexingState.status === "paused" ||
         (paused && indexingState.status === "indexing") ? (
         <FlexDiv>
-<<<<<<< HEAD
-          <BlinkingDot
-=======
           <StatusDot
->>>>>>> origin/main
             color={STATUS_COLORS.PAUSED}
             onClick={(e) => {
               ideMessenger.post("index/setPaused", false);
             }}
-<<<<<<< HEAD
-          ></BlinkingDot>
-=======
           ></StatusDot>
->>>>>>> origin/main
           <StatusHeading>
             Indexing paused ({Math.trunc(indexingState.progress * 100)}
             %)
@@ -232,14 +198,7 @@ const IndexingProgressBar = ({
             ideMessenger.post("index/setPaused", true);
           }}
         >
-<<<<<<< HEAD
-          <BlinkingDot
-            color={STATUS_COLORS.INDEXING}
-            shouldBlink={true}
-          ></BlinkingDot>
-=======
           <StatusDot shouldBlink color={STATUS_COLORS.INDEXING}></StatusDot>
->>>>>>> origin/main
           <div>
             <FlexDiv>
               <ProgressBarWrapper>
