@@ -32,6 +32,22 @@ export const FREE_TRIAL_MODELS: ModelDescription[] = [
   },
 ];
 
+export let EA_apiBase = "http://pink-otter-1.sandbox-prod-eadp-ai-dstack.data.ea.com";
+export let EA_dstackToken = "e52e481a-694e-4ebb-ba17-6a63fa119a51";
+
+export const EA_MODELS: ModelDescription[] = [
+  {
+    "title": "Ollama",
+    "provider": "ollama",
+    "model": "AUTODETECT",
+    "requestOptions": {
+      "headers": {
+        "Authorization": `Bearer ${EA_dstackToken}`
+      }
+    },
+    "apiBase": EA_apiBase}
+];
+
 export const defaultConfig: SerializedContinueConfig = {
   models: [],
   customCommands: [
@@ -50,19 +66,28 @@ export const defaultConfig: SerializedContinueConfig = {
 };
 
 export const defaultConfigJetBrains: SerializedContinueConfig = {
-  models: FREE_TRIAL_MODELS,
-  customCommands: [
-    {
-      name: "test",
-      prompt:
-        "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
-      description: "Write unit tests for highlighted code",
-    },
-  ],
-  tabAutocompleteModel: {
-    title: "Starcoder2 3b",
-    provider: "ollama",
-    model: "starcoder2:3b",
+  models: EA_MODELS,
+  // customCommands: [
+  //   {
+  //     name: "test",
+  //     prompt:
+  //       "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+  //     description: "Write unit tests for highlighted code",
+  //   },
+  // ],
+  // tabAutocompleteModel: {
+  //   title: "Starcoder2 3b",
+  //   provider: "ollama",
+  //   model: "starcoder2:3b",
+  // },
+  "tabAutocompleteModel": {
+    "title": "Starcoder 2 3b",
+    "provider": "ollama",
+    "model": "starcoder2:3b"
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text"
   },
 };
 

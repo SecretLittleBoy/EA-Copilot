@@ -281,10 +281,10 @@ const Layout = () => {
               </HeaderButtonWithText>
               <HeaderButtonWithText
                 onClick={() => {
-                  // navigate("/settings");
+                  navigate("/onboarding");
                   ideMessenger.post("openConfigJson", undefined);
                 }}
-                text="Configure Continue"
+                text="Configure EA Copilot"
               >
                 <Cog6ToothIcon width="1.4em" height="1.4em" />
               </HeaderButtonWithText>
