@@ -36,7 +36,7 @@ fun showTutorial(project: Project) {
         if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
             content = content.replace("⌘", "⌃")
         }
-        val filepath = Paths.get(getContinueGlobalPath(), "EA_Copilot_tutorial.py").toString()
+        val filepath = Paths.get(getContinueGlobalPath(), "ea_copilot_tutorial.py").toString()
         File(filepath).writeText(content)
         val virtualFile = LocalFileSystem.getInstance().findFileByPath(filepath)
 
