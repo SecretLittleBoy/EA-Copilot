@@ -16,7 +16,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
 
-class ContinueSettingsComponent: DumbAware {
+class ContinueSettingsComponent : DumbAware {
     val panel: JPanel = JPanel(GridBagLayout())
     val remoteConfigServerUrl: JTextField = JTextField()
     val remoteConfigSyncPeriod: JTextField = JTextField()
@@ -69,6 +69,10 @@ open class ContinueExtensionSettings : PersistentStateComponent<ContinueExtensio
         var userToken: String? = null
         var enableTabAutocomplete: Boolean = true
         var ghAuthToken: String? = null
+
+        override fun toString(): String {
+            return "ContinueState(lastSelectedInlineEditModel=$lastSelectedInlineEditModel, shownWelcomeDialog=$shownWelcomeDialog, remoteConfigServerUrl=$remoteConfigServerUrl, remoteConfigSyncPeriod=$remoteConfigSyncPeriod, userToken=$userToken, enableTabAutocomplete=$enableTabAutocomplete, ghAuthToken=$ghAuthToken)"
+        }
     }
 
     var continueState: ContinueState = ContinueState()

@@ -12,7 +12,6 @@ import com.intellij.openapi.util.TextRange
 class AutocompleteCaretListener: CaretListener {
     override fun caretPositionChanged(event: CaretEvent) {
         val caret = event.caret ?: return
-        val oldPosition = event.oldPosition
         val offset = caret.offset
         val editor = caret.editor
         val autocompleteService = editor.project?.service<AutocompleteService>() ?: return

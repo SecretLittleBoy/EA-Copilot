@@ -1,6 +1,7 @@
 package com.github.continuedev.continueintellijextension.`continue`
 import com.github.continuedev.continueintellijextension.services.ContinueExtensionSettings
 import com.github.continuedev.continueintellijextension.services.ContinuePluginService
+import com.github.continuedev.continueintellijextension.utils.debugPrintln
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -34,13 +35,6 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
         }
     }
 
-    private fun close() {
-        writer?.close()
-        reader?.close()
-        val exitCode = process?.waitFor()
-        println("Subprocess exited with code: $exitCode")
-    }
-
     fun request(messageType: String, data: Any?, messageId: String?, onResponse: (Any?) -> Unit) {
         val id = messageId ?: uuid()
         val message = gson.toJson(mapOf(
@@ -50,6 +44,7 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
         ))
         responseListeners[id] = onResponse
         write(message)
+        debugPrintln("CoreMessenger.kt: request: $message")
     }
 
     private fun handleMessage(json: String) {
@@ -99,7 +94,6 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
             } else {
                 responseListeners.remove(messageId)
             }
-
         }
     }
 
@@ -167,7 +161,7 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
                     destination
             ).start()
             setFilePermissions(destination, "rwxr-xr-x")
-        } else if (osName.contains("nix") || osName.contains("nux") || osName.contains("mac")) {
+        } else if (osName.contains("nix") || osName.contains("nux")) {
             setFilePermissions(destination, "rwxr-xr-x")
         }
     }

@@ -18,27 +18,24 @@ class ContinuePluginToolWindowFactory : ToolWindowFactory, DumbAware {
         val continueToolWindow = ContinuePluginWindow(toolWindow, project)
         val content = ContentFactory.getInstance().createContent(continueToolWindow.content, null, false)
         toolWindow.contentManager.addContent(content)
-        val titleActions = mutableListOf<AnAction>()
-        createTitleActions(titleActions)
-
-        // Add MaximizeToolWindow action
-        val action = ActionManager.getInstance().getAction("MaximizeToolWindow")
-        if (action != null) {
-            titleActions.add(action)
-        }
-
-        toolWindow.setTitleActions(titleActions)
+        toolWindow.setTitleActions(getTitleActions())
     }
 
-    private fun createTitleActions(titleActions: MutableList<in AnAction>) {
+    private fun getTitleActions(): MutableList<AnAction> {
+        val titleActions = mutableListOf<AnAction>()
         val action = ActionManager.getInstance().getAction("ContinueSidebarActionsGroup")
         if (action != null) {
             titleActions.add(action)
         }
+        // Add MaximizeToolWindow action
+        val action2 = ActionManager.getInstance().getAction("MaximizeToolWindow")
+        if (action2 != null) {
+            titleActions.add(action2)
+        }
+        return titleActions
     }
 
     override fun shouldBeAvailable(project: Project) = true
-
 
     class ContinuePluginWindow(toolWindow: ToolWindow, project: Project) {
 
@@ -54,8 +51,8 @@ class ContinuePluginToolWindowFactory : ToolWindowFactory, DumbAware {
 
             val browser = ContinueBrowser(project, url)
             val continuePluginService = ServiceManager.getService(
-                    project,
-                    ContinuePluginService::class.java
+                project,
+                ContinuePluginService::class.java
             )
             continuePluginService.continuePluginWindow = this
             browser

@@ -15,7 +15,7 @@ import com.intellij.openapi.editor.InlayProperties
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 
-data class PendingCompletion (
+data class PendingCompletion(
     val editor: Editor,
     val offset: Int,
     val completionId: String,
@@ -28,8 +28,7 @@ class AutocompleteService(private val project: Project) {
     private val autocompleteLookupListener = project.service<AutocompleteLookupListener>()
 
     fun triggerCompletion(editor: Editor) {
-        val settings =
-                ServiceManager.getService(ContinueExtensionSettings::class.java)
+        val settings = ServiceManager.getService(ContinueExtensionSettings::class.java)
         if (!settings.continueState.enableTabAutocomplete) {
             return
         }
@@ -50,8 +49,8 @@ class AutocompleteService(private val project: Project) {
             "completionId" to completionId,
             "filepath" to virtualFile?.path,
             "pos" to mapOf(
-                    "line" to editor.caretModel.primaryCaret.logicalPosition.line,
-                    "character" to column
+                "line" to editor.caretModel.primaryCaret.logicalPosition.line,
+                "character" to column
             ),
             "recentlyEditedFiles" to emptyList<String>(),
             "recentlyEditedRanges" to emptyList<String>(),
@@ -66,14 +65,13 @@ class AutocompleteService(private val project: Project) {
             val completions = response as List<*>
             if (completions.isNotEmpty()) {
                 val completion = completions[0].toString()
-
                 if (completion.lines().size === 1 || column >= lineLength) {
                     // Do not render if completion is multi-line and caret is in middle of line
                     renderCompletion(editor, offset, completion)
                     pendingCompletion = pendingCompletion?.copy(text = completion)
 
                     // Hide auto-popup
-//                    AutoPopupController.getInstance(project).cancelAllRequests()
+                    // AutoPopupController.getInstance(project).cancelAllRequests()
                 }
             }
         }))
@@ -122,7 +120,7 @@ class AutocompleteService(private val project: Project) {
 
     private fun cancelCompletion(completion: PendingCompletion) {
         // Send cancellation message to core
-        project.service<ContinuePluginService>().coreMessenger?.request("autocomplete/cancel", null,null, ({}))
+        project.service<ContinuePluginService>().coreMessenger?.request("autocomplete/cancel", null, null, ({}))
     }
 
     fun clearCompletions(editor: Editor) {

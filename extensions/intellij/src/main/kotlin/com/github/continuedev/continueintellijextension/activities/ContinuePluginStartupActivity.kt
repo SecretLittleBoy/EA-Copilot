@@ -28,6 +28,7 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.extensions.PluginId
 
 fun showTutorial(project: Project) {
+    println("ContinuePluginStartupActivity.kt: Showing tutorial")
     ContinuePluginStartupActivity::class.java.getClassLoader().getResourceAsStream("continue_tutorial.py").use { `is` ->
         if (`is` == null) {
             throw IOException("Resource not found: continue_tutorial.py")
@@ -39,7 +40,6 @@ fun showTutorial(project: Project) {
         val filepath = Paths.get(getContinueGlobalPath(), "continue_tutorial.py").toString()
         File(filepath).writeText(content)
         val virtualFile = LocalFileSystem.getInstance().findFileByPath(filepath)
-
 
         ApplicationManager.getApplication().invokeLater {
             if (virtualFile != null) {
@@ -53,13 +53,11 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun runActivity(project: Project) {
-
         removeShortcutFromAction(getPlatformSpecificKeyStroke("J"))
         removeShortcutFromAction(getPlatformSpecificKeyStroke("shift J"))
-
-       ApplicationManager.getApplication().executeOnPooledThread {
-           initializePlugin(project)
-       }
+        ApplicationManager.getApplication().executeOnPooledThread {
+            initializePlugin(project)
+        }
     }
 
     private fun getPlatformSpecificKeyStroke(key: String): String {
@@ -79,15 +77,15 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
         }
 
         for (actionId in actionIds) {
-             if (actionId.startsWith("continue")) {
-                 continue
-             }
-             val shortcuts = keymap.getShortcuts(actionId)
-             for (shortcut in shortcuts) {
-                 if (shortcut is KeyboardShortcut && shortcut.firstKeyStroke == keyStroke) {
-                     keymap.removeShortcut(actionId, shortcut)
-                 }
-             }
+            if (actionId.startsWith("continue")) {
+                continue
+            }
+            val shortcuts = keymap.getShortcuts(actionId)
+            for (shortcut in shortcuts) {
+                if (shortcut is KeyboardShortcut && shortcut.firstKeyStroke == keyStroke) {
+                    keymap.removeShortcut(actionId, shortcut)
+                }
+            }
         }
     }
 
@@ -100,50 +98,50 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
         val defaultStrategy = DefaultTextSelectionStrategy()
 
         coroutineScope.launch {
-            val settings =
-                    ServiceManager.getService(ContinueExtensionSettings::class.java)
+            val settings = ServiceManager.getService(ContinueExtensionSettings::class.java)
+            println("ContinuePluginStartupActivity.kt: Initializing plugin. Settings: " + settings.continueState)
             if (!settings.continueState.shownWelcomeDialog) {
-                settings.continueState.shownWelcomeDialog = true
                 // Open continue_tutorial.py
                 showTutorial(project)
+                settings.continueState.shownWelcomeDialog = true
             }
 
             val ideProtocolClient = IdeProtocolClient(
-                    continuePluginService,
-                    defaultStrategy,
-                    coroutineScope,
-                    project.basePath,
-                    project
+                continuePluginService,
+                defaultStrategy,
+                coroutineScope,
+                project.basePath,
+                project
             )
 
             continuePluginService.ideProtocolClient = ideProtocolClient
 
             // Listen to changes to settings so the core can reload remote configuration
-            val connection = ApplicationManager.getApplication().messageBus.connect()
-            connection.subscribe(SettingsListener.TOPIC, object : SettingsListener {
-                override fun settingsUpdated(settings: ContinueExtensionSettings.ContinueState) {
-                    continuePluginService.coreMessenger?.request("config/ideSettingsUpdate", settings, null) { _ -> }
-                }
-            })
+            ApplicationManager.getApplication().messageBus.connect()
+                .subscribe(SettingsListener.TOPIC, object : SettingsListener {
+                    override fun settingsUpdated(settings: ContinueExtensionSettings.ContinueState) {
+                        continuePluginService.coreMessenger?.request(
+                            "config/ideSettingsUpdate",
+                            settings,
+                            null
+                        ) { _ -> }
+                    }
+                })
 
             GlobalScope.async(Dispatchers.IO) {
-                val listener =
-                        ContinuePluginSelectionListener(
-                                ideProtocolClient,
-                                coroutineScope
-                        )
+                val listener = ContinuePluginSelectionListener(ideProtocolClient, coroutineScope)
 
                 // Reload the WebView
                 continuePluginService?.let {
                     val workspacePaths =
-                            if (project.basePath != null) arrayOf(project.basePath) else emptyList<String>()
+                        if (project.basePath != null) arrayOf(project.basePath) else emptyList<String>()
 
                     continuePluginService.workspacePaths = workspacePaths as Array<String>
                 }
 
                 EditorFactory.getInstance().eventMulticaster.addSelectionListener(
-                        listener,
-                        this@ContinuePluginStartupActivity
+                    listener,
+                    this@ContinuePluginStartupActivity
                 )
             }
 
@@ -188,7 +186,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
                 }
 
                 // esbuild needs permissions
-                val esbuildPath = Paths.get(targetPath, "esbuild"+ (if (os == "win32") ".exe" else "")).toString()
+                val esbuildPath = Paths.get(targetPath, "esbuild" + (if (os == "win32") ".exe" else "")).toString()
 
                 val coreMessenger = CoreMessenger(project, esbuildPath, continueCorePath, ideProtocolClient)
                 continuePluginService.coreMessenger = coreMessenger
@@ -197,6 +195,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
     }
 
     override fun dispose() {
+        println("Disposing ContinuePluginStartupActivity")
         // Cleanup resources here
         coroutineScope.cancel()
     }

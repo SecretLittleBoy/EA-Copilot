@@ -26,23 +26,22 @@ class AutocompleteLookupListener(project: Project) : LookupManagerListener {
     override fun activeLookupChanged(oldLookup: Lookup?, newLookup: Lookup?) {
         val newEditor = newLookup?.editor ?: return
         if (newLookup is LookupImpl) {
-            newLookup.addLookupListener(
-                object : LookupListener {
-                    override fun lookupShown(event: LookupEvent) {
-                        super.lookupShown(event)
-                        ApplicationManager.getApplication().invokeLater {
-                            isLookupShown.set(false)
-                            event.lookup.editor.project?.service<AutocompleteService>()?.hideCompletions(newEditor)
-                        }
+            newLookup.addLookupListener(object : LookupListener {
+                override fun lookupShown(event: LookupEvent) {
+                    super.lookupShown(event)
+                    ApplicationManager.getApplication().invokeLater {
+                        isLookupShown.set(false)
+                        event.lookup.editor.project?.service<AutocompleteService>()?.hideCompletions(newEditor)
                     }
+                }
 
-                    override fun lookupCanceled(event: LookupEvent) {
-                        super.lookupCanceled(event)
-                        ApplicationManager.getApplication().invokeLater {
-                            isLookupShown.set(true)
-                        }
+                override fun lookupCanceled(event: LookupEvent) {
+                    super.lookupCanceled(event)
+                    ApplicationManager.getApplication().invokeLater {
+                        isLookupShown.set(true)
                     }
-                })
+                }
+            })
         }
     }
 }

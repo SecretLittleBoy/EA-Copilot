@@ -44,5 +44,4 @@ class ConfigJsonSchemaFileProvider : JsonSchemaFileProvider {
     override fun getSchemaType(): SchemaType {
         return SchemaType.embeddedSchema
     }
-
 }

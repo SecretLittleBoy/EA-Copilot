@@ -3,7 +3,6 @@ package com.github.continuedev.continueintellijextension.services
 import com.github.continuedev.continueintellijextension.`continue`.CoreMessenger
 import com.github.continuedev.continueintellijextension.`continue`.IdeProtocolClient
 import com.github.continuedev.continueintellijextension.`continue`.uuid
-import com.github.continuedev.continueintellijextension.toolWindow.ContinueBrowser
 import com.github.continuedev.continueintellijextension.toolWindow.ContinuePluginToolWindowFactory
 import com.google.gson.Gson
 import com.intellij.openapi.Disposable
