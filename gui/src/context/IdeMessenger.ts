@@ -56,6 +56,7 @@ export class IdeMessenger implements IIdeMessenger {
   }
 
   private _postToIde(messageType: string, data: any, messageId?: string) {
+    console.log("Sending message to IDE: messageType: ", messageType,", data: ", data, ", messageId: ", messageId);
     if (typeof vscode === "undefined") {
       if (isJetBrains()) {
         if (window.postIntellijMessage === undefined) {

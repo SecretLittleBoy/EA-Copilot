@@ -118,7 +118,7 @@ class ContinueBrowser(val project: Project, url: String, useOsr: Boolean = false
             val ide = continuePluginService.ideProtocolClient;
 
             val respond = fun(data: Any?) {
-                debugWebviewPrintln("IdeProtocolClient.kt Responding to webview: messageType: $messageType, data: $data, messageId: $messageId")
+                debugWebviewPrintln("IdeProtocolClient.kt get response from core: messageType: $messageType, data: $data, messageId: $messageId")
                 sendToWebview(messageType, data, messageId ?: uuid())
             }
 

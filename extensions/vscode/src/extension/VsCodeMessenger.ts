@@ -232,6 +232,7 @@ export class VsCodeMessenger {
       );
     });
     this.onWebviewOrCore("getWorkspaceDirs", async (msg) => {
+      console.log("getWorkspaceDirs: ", ide.getWorkspaceDirs());
       return ide.getWorkspaceDirs();
     });
     this.onWebviewOrCore("listFolders", async (msg) => {

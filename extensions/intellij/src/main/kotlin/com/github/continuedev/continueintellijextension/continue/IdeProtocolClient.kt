@@ -944,10 +944,14 @@ class IdeProtocolClient (
     }
 
     private fun currentFile(): String? {
-        val fileEditorManager = FileEditorManager.getInstance(project)
-        val editor = fileEditorManager.selectedTextEditor
-        val virtualFile = editor?.document?.let { FileDocumentManager.getInstance().getFile(it) }
-        return virtualFile?.path
+        var filePath: String? = null
+        ApplicationManager.getApplication().invokeAndWait {
+            val fileEditorManager = FileEditorManager.getInstance(project)
+            val editor = fileEditorManager.selectedTextEditor
+            val virtualFile = editor?.document?.let { FileDocumentManager.getInstance().getFile(it) }
+            filePath = virtualFile?.path
+        }
+        return filePath
     }
 
     fun showMessage(msg: String) {

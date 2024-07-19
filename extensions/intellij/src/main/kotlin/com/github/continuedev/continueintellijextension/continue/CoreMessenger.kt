@@ -240,6 +240,7 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
                         val line = reader?.readLine()
                         if (line != null && line.isNotEmpty()) {
                             try {
+                                debugPrintln("CoreMessenger.kt get message from core: $line")
                                 handleMessage(line)
                             } catch (e: Exception) {
                                 println("Error handling message: $line")
