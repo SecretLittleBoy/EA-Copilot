@@ -94,6 +94,7 @@ export function setupStatusBar(
   statusBarItem.tooltip = statusBarItemTooltip(status ?? statusBarStatus);
   statusBarItem.command = "continue.openTabAutocompleteConfigMenu";
 
+  statusBarItem.text = statusBarItem.text.replace("Continue", "eaCopilot");
   statusBarItem.show();
   if (status !== undefined) {
     statusBarStatus = status;
