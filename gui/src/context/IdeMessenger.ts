@@ -6,6 +6,7 @@ import { createContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "vscode-webview";
 import { isJetBrains } from "../util";
+import type { MessagePart } from "core/index"
 
 interface vscode {
   postMessage(message: any): vscode;
@@ -187,12 +188,33 @@ export class IdeMessenger implements IIdeMessenger {
     return returnVal;
   }
 
+  private addSystemMessage(messages: ChatMessage[]) {
+    // find the first user message, and insert a system message before the user message text
+    const systemMessage: string = "<system>You are a programming expert named \"EA Copilot\" developed by \"Mario Long\", an intern at EA.</system>\n";
+    const userMessageIndex = messages.findIndex((m) => m.role === "user");
+    if (userMessageIndex !== -1) {
+      if (Array.isArray(messages[userMessageIndex].content)) {
+        const contentArray = messages[userMessageIndex].content as MessagePart[];
+        messages[userMessageIndex].content = [{ type: contentArray[0].type, text: systemMessage + contentArray[0].text }];
+      } else if (typeof messages[userMessageIndex].content === "string") {
+        const contentString = messages[userMessageIndex].content as string;
+        messages[userMessageIndex].content = systemMessage + contentString;
+      } else {
+        console.error("IdeMessenger.ts addSystemMessage: unexpected message content type: ", messages[userMessageIndex].content);
+      }
+    } else {
+      messages.unshift({ role: "user", content: [{ type: "text", text: systemMessage }] });
+    }
+  }
+
   async *llmStreamChat(
     modelTitle: string,
     cancelToken: AbortSignal | undefined,
     messages: ChatMessage[],
     options: LLMFullCompletionOptions = {},
   ): AsyncGenerator<ChatMessage, PromptLog> {
+    this.addSystemMessage(messages);
+    // console.log("IdeMessenger.ts llmStreamChat request messages: ", messages);
     const gen = this.streamRequest(
       "llm/streamChat",
       {
