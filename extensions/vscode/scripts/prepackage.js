@@ -509,7 +509,7 @@ const exe = os === "win32" ? ".exe" : "";
 
     // Tutorial
     "media/welcome.md",
-    "continue_tutorial.py",
+    "ea_copilot_tutorial.py",
     "config_schema.json",
 
     // Embeddings model
