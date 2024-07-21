@@ -1,25 +1,25 @@
 {
   "name": "continue",
   "icon": "media/icon.png",
-  "version": "0.8.43",
+  "version": "0.8.48",
   "repository": {
     "type": "git",
-    "url": "https://github.com/continuedev/continue"
+    "url": "https://github.com/SecretLittleBoy/EA-Copilot"
   },
   "extensionKind": [
     "ui",
     "workspace"
   ],
   "bugs": {
-    "url": "https://github.com/continuedev/continue/issues",
-    "email": "nate@continue.dev"
+    "url": "https://github.com/SecretLittleBoy/EA-Copilot/issues",
+    "email": "2045918921@qq.com"
   },
-  "homepage": "https://continue.dev",
-  "qna": "https://github.com/continuedev/continue/issues/new/choose",
+  "homepage": "https://github.com/SecretLittleBoy",
+  "qna": false,
   "license": "Apache-2.0",
-  "displayName": "Continue - Codestral, Claude, and more",
+  "displayName": "EA Copilot",
   "pricing": "Free",
-  "description": "The leading open-source AI code assistant",
+  "description": "EA Copilot is AI code assistant in Electronic Arts",
   "publisher": "Continue",
   "engines": {
     "vscode": "^1.70.0",
@@ -67,7 +67,7 @@
       }
     ],
     "configuration": {
-      "title": "Continue",
+      "title": "EA Copilot",
       "properties": {
         "continue.telemetryEnabled": {
           "type": "boolean",
@@ -323,7 +323,7 @@
     "submenus": [
       {
         "id": "continue.continueSubMenu",
-        "label": "Continue"
+        "label": "EA Copilot"
       }
     ],
     "menus": {
@@ -433,8 +433,8 @@
       "activitybar": [
         {
           "id": "continue",
-          "title": "Continue",
-          "icon": "media/sidebar-icon.png"
+          "title": "EA Copilot",
+          "icon": "media/sidebar-icon.svg"
         }
       ]
     },
