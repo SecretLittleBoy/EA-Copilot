@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { lightGray } from "../../components";
 import ConfirmationDialog from "../../components/dialogs/ConfirmationDialog";
-import GitHubSignInButton from "../../components/modelSelection/quickSetup/GitHubSignInButton";
+import { Input } from "../../components";
 import { IdeMessengerContext } from "../../context/IdeMessenger";
 import {
   setDialogMessage,
@@ -29,7 +29,7 @@ function Onboarding() {
   const dispatch = useDispatch();
   const ideMessenger = useContext(IdeMessengerContext);
 
-  const [hasSignedIntoGh, setHasSignedIntoGh] = useState(false);
+  const [dstackToken, setDstackToken] = useState("");
   const [selectedOnboardingMode, setSlectedOnboardingMode] = useState<
     OnboardingMode | undefined
   >(undefined);
@@ -40,32 +40,8 @@ function Onboarding() {
     ideMessenger.post("completeOnboarding", {
       mode: selectedOnboardingMode,
     });
-
-    /**
-     * "completeOnboarding" above will update the config with our
-     * new embeddings provider. If it's not the default local provider,
-     * we need to re-index the codebase.
-     */
-    if (selectedOnboardingMode !== "local") {
-      ideMessenger.post("index/forceReIndex", undefined);
-    }
-
-    switch (selectedOnboardingMode) {
-      case "local":
-        navigate("/localOnboarding");
-        break;
-
-      case "apiKeys":
-        navigate("/apiKeysOnboarding");
-        break;
-
-      case "freeTrial":
-        completeOnboarding();
-        break;
-
-      default:
-        break;
-    }
+    ideMessenger.post("index/forceReIndex", undefined);
+    navigate("/localOnboarding");
   }
 
   return (
@@ -81,47 +57,8 @@ function Onboarding() {
       </div>
 
       <div className="flex flex-col gap-6 pb-8 pt-4">
-        {(!hasPassedFTL() || isJetBrains()) && (
-          <Div
-            selected={selectedOnboardingMode === "freeTrial"}
-            onClick={() => setSlectedOnboardingMode("freeTrial")}
-          >
-            <h3>
-              <GiftIcon
-                width="1.4em"
-                height="1.4em"
-                className="align-middle pr-2"
-              />
-              Free trial
-            </h3>
-            <p>
-              Start your free trial of {FREE_TRIAL_LIMIT_REQUESTS} requests by
-              signing into GitHub.
-            </p>
-
-            <ul className="pl-4 mb-0">
-              <li>
-                <b>Chat:</b> Llama 3 with Ollama, LM Studio, etc.
-              </li>
-              <li>
-                <b>Embeddings:</b> Nomic Embed
-              </li>
-              <li>
-                <b>Autocomplete:</b> Starcoder2 3B
-              </li>
-            </ul>
-
-            {!hasSignedIntoGh && (
-              <div className="flex justify-center py-3">
-                <GitHubSignInButton
-                  onComplete={() => setHasSignedIntoGh(true)}
-                ></GitHubSignInButton>
-              </div>
-            )}
-          </Div>
-        )}
         <Div
-          selected={selectedOnboardingMode === "local"}
+          selected={true}
           onClick={() => setSlectedOnboardingMode("local")}
         >
           <h3>
@@ -135,7 +72,11 @@ function Onboarding() {
           <p>
             No code will leave your computer, but less powerful models are used.
           </p>
-
+          <Input
+            placeholder="Paste token here"
+            value={dstackToken}
+            onChange={(e) => setDstackToken(e.target.value)}
+          />
           <ul className="pl-4 ">
             <li>
               <b>Chat:</b> Llama 3 with Ollama, LM Studio, etc.
@@ -149,35 +90,6 @@ function Onboarding() {
           </ul>
         </Div>
 
-        <Div
-          selected={selectedOnboardingMode === "apiKeys"}
-          onClick={() => setSlectedOnboardingMode("apiKeys")}
-        >
-          <h3>
-            <CheckBadgeIcon
-              width="1.4em"
-              height="1.4em"
-              className="align-middle pr-2"
-            />
-            Best experience
-          </h3>
-          <p>
-            Start with the most powerful models available, or customize your own
-            configuration.
-          </p>
-
-          <ul className="pl-4 ">
-            <li>
-              <b>Chat:</b> Claude 3.5 Sonnet
-            </li>
-            <li>
-              <b>Embeddings:</b> Voyage Code 2
-            </li>
-            <li>
-              <b>Autocomplete:</b> Codestral
-            </li>
-          </ul>
-        </Div>
       </div>
 
       <div className="flex justify-end">

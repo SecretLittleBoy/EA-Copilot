@@ -32,6 +32,35 @@ export const FREE_TRIAL_MODELS: ModelDescription[] = [
   },
 ];
 
+export let EA_apiBase = "http://eacopilot.sandbox-prod-eadp-ai-dstack.data.ea.com";
+export let EA_dstackToken = "e52e481a-694e-4ebb-ba17-6a63fa119a51";
+
+export const EA_MODELS: ModelDescription[] = [
+  {
+    "title": "deepseek-coder-v2:16b",
+    "provider": "ollama",
+    "model": "deepseek-coder-v2:16b",
+    "contextLength": 8192,
+    "requestOptions": {
+      "headers": {
+        "Authorization": `Bearer ${EA_dstackToken}`
+      }
+    },
+    "apiBase": EA_apiBase
+  },
+  {
+    "title": "nomic-embed-text",
+    "provider": "ollama",
+    "model": "nomic-embed-text",
+    "requestOptions": {
+      "headers": {
+        "Authorization": `Bearer ${EA_dstackToken}`
+      }
+    },
+    "apiBase": EA_apiBase
+  }
+];
+
 export const defaultConfig: SerializedContinueConfig = {
   models: [],
   customCommands: [
@@ -43,26 +72,35 @@ export const defaultConfig: SerializedContinueConfig = {
     },
   ],
   tabAutocompleteModel: {
-    title: "Starcoder2 3b",
+    title: "deepseek-coder-v2:16b",
     provider: "ollama",
-    model: "starcoder2:3b",
+    model: "deepseek-coder-v2:16b",
   },
 };
 
 export const defaultConfigJetBrains: SerializedContinueConfig = {
-  models: FREE_TRIAL_MODELS,
-  customCommands: [
-    {
-      name: "test",
-      prompt:
-        "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
-      description: "Write unit tests for highlighted code",
-    },
-  ],
-  tabAutocompleteModel: {
-    title: "Starcoder2 3b",
-    provider: "ollama",
-    model: "starcoder2:3b",
+  models: EA_MODELS,
+  // customCommands: [
+  //   {
+  //     name: "test",
+  //     prompt:
+  //       "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+  //     description: "Write unit tests for highlighted code",
+  //   },
+  // ],
+  // tabAutocompleteModel: {
+  //   title: "Starcoder2 3b",
+  //   provider: "ollama",
+  //   model: "starcoder2:3b",
+  // },
+  "tabAutocompleteModel": {
+    "title": "deepseek-coder-v2:16b",
+    "provider": "ollama",
+    "model": "deepseek-coder-v2:16b"
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text"
   },
 };
 
