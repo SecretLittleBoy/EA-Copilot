@@ -290,13 +290,13 @@ function ModelSelect(props: {}) {
           </div>
         </StyledListbox>
 
-        <StyledPlusIcon
+        {/* <StyledPlusIcon
           width="1.3em"
           height="1.3em"
           onClick={() => {
             navigate("/addModel");
           }}
-        />
+        /> */}
       </GridDiv>
     </>
   );
