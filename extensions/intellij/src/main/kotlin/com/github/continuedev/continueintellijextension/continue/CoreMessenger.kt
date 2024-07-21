@@ -62,6 +62,7 @@ class CoreMessenger(private val project: Project, esbuildPath: String, continueC
                         "data" to data
                 ))
                 write(message)
+                debugPrintln("CoreMessenger.kt: handleMessage response to core: $message")
             };
         }
 
