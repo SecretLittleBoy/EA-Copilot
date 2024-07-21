@@ -6,6 +6,7 @@ import com.github.continuedev.continueintellijextension.listeners.ContinuePlugin
 import com.github.continuedev.continueintellijextension.services.ContinueExtensionSettings
 import com.github.continuedev.continueintellijextension.services.ContinuePluginService
 import com.github.continuedev.continueintellijextension.services.SettingsListener
+import com.github.continuedev.continueintellijextension.utils.debugPrintln
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.application.ApplicationManager
@@ -28,7 +29,7 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.extensions.PluginId
 
 fun showTutorial(project: Project) {
-    println("ContinuePluginStartupActivity.kt: Showing tutorial")
+    debugPrintln("ContinuePluginStartupActivity.kt: Showing tutorial")
     ContinuePluginStartupActivity::class.java.getClassLoader().getResourceAsStream("continue_tutorial.py").use { `is` ->
         if (`is` == null) {
             throw IOException("Resource not found: continue_tutorial.py")
@@ -99,7 +100,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
 
         coroutineScope.launch {
             val settings = ServiceManager.getService(ContinueExtensionSettings::class.java)
-            println("ContinuePluginStartupActivity.kt: Initializing plugin. Settings: " + settings.continueState)
+            debugPrintln("ContinuePluginStartupActivity.kt: Initializing plugin. Settings: " + settings.continueState)
             if (!settings.continueState.shownWelcomeDialog) {
                 // Open continue_tutorial.py
                 showTutorial(project)
@@ -195,7 +196,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
     }
 
     override fun dispose() {
-        println("Disposing ContinuePluginStartupActivity")
+        debugPrintln("Disposing ContinuePluginStartupActivity")
         // Cleanup resources here
         coroutineScope.cancel()
     }
