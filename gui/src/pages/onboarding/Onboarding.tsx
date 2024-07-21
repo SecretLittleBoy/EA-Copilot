@@ -44,15 +44,19 @@ function Onboarding() {
     navigate("/localOnboarding");
   }
 
+  function myOnSubmit() {
+    completeOnboarding();
+  }
+
   return (
     <div className="max-w-96  mx-auto leading-normal">
       <div className="leading-relaxed">
-        <h1 className="text-center">Welcome to Continue</h1>
+        <h1 className="text-center">Welcome to EA Copilot Config</h1>
         <p className="text-center ">
-          Let's find the setup that works best for you. You can update your
-          configuration after onboarding by clicking the
+          For more advanced configuration, You can edit "~/.continue/config.json".
+          {/* You can update your configuration after onboarding by clicking the
           <Cog6ToothIcon className="inline-block h-5 w-5 align-middle px-1" />
-          icon in the bottom-right corner of Continue.
+          icon in the bottom-right corner of Continue. */}
         </p>
       </div>
 
@@ -67,27 +71,16 @@ function Onboarding() {
               height="1.4em"
               className="align-middle pr-2"
             />
-            Local models
+            EA-dstack Token
           </h3>
           <p>
-            No code will leave your computer, but less powerful models are used.
+            If you have an personal EA-dstack token, you can paste it here.
           </p>
           <Input
             placeholder="Paste token here"
             value={dstackToken}
             onChange={(e) => setDstackToken(e.target.value)}
           />
-          <ul className="pl-4 ">
-            <li>
-              <b>Chat:</b> Llama 3 with Ollama, LM Studio, etc.
-            </li>
-            <li>
-              <b>Embeddings:</b> Nomic Embed
-            </li>
-            <li>
-              <b>Autocomplete:</b> Starcoder2 3B
-            </li>
-          </ul>
         </Div>
 
       </div>
@@ -113,7 +106,7 @@ function Onboarding() {
           >
             Skip
           </div>
-          <StyledButton disabled={!selectedOnboardingMode} onClick={onSubmit}>
+          <StyledButton disabled={!selectedOnboardingMode} onClick={myOnSubmit}>
             Continue
           </StyledButton>
         </div>
