@@ -1,6 +1,6 @@
 package com.github.continuedev.continueintellijextension.utils
 
-val isDebug = true
+val isDebug = false
 
 fun debugPrintln(message: String) {
     if (isDebug) {
