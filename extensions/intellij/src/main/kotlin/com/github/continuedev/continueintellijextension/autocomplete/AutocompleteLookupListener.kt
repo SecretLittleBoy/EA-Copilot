@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 @Service(Service.Level.PROJECT)
 class AutocompleteLookupListener(project: Project) : LookupManagerListener {
-    private val isLookupShown = AtomicBoolean(true)
+    private val isLookupShown = AtomicBoolean(true) // should auto completion render ?
 
     fun isLookupEmpty(): Boolean {
         return isLookupShown.get()
@@ -37,6 +37,13 @@ class AutocompleteLookupListener(project: Project) : LookupManagerListener {
 
                 override fun lookupCanceled(event: LookupEvent) {
                     super.lookupCanceled(event)
+                    ApplicationManager.getApplication().invokeLater {
+                        isLookupShown.set(true)
+                    }
+                }
+
+                override fun itemSelected(event: LookupEvent) {
+                    super.itemSelected(event)
                     ApplicationManager.getApplication().invokeLater {
                         isLookupShown.set(true)
                     }

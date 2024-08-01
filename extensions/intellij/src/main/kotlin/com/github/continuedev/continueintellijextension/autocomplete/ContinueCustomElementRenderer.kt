@@ -38,7 +38,7 @@ class ContinueCustomElementRenderer (
     }
 
     override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
-        g.color = JBColor.GRAY
+        g.color = JBColor.green
         g.font = font(inlay.editor)
         g.drawString(this.text, targetRegion.x, targetRegion.y + inlay.editor.ascent)
     }

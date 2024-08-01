@@ -64,7 +64,7 @@ class ContinueMultilineCustomElementRenderer (
     }
 
     override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
-        g.color = JBColor.GRAY
+        g.color = JBColor.green
         g.font = font
         var additionalYOffset = -editor.lineHeight;
         var isFirstLine = true
