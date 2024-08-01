@@ -24,6 +24,7 @@ import { useWebviewListener } from "../hooks/useWebviewListener";
 import { RootState } from "../redux/store";
 import { getFontSize } from "../util";
 import HeaderButtonWithText from "./HeaderButtonWithText";
+import { useNavigate } from "react-router-dom";
 
 const StyledListbox = styled(Listbox)`
   background-color: ${vscBackground};
@@ -126,6 +127,7 @@ function ProfileSwitcher(props: {}) {
   const ideMessenger = useContext(IdeMessengerContext);
   const { session, logout, login } = useAuth();
   const [profiles, setProfiles] = useState<ProfileDescription[]>([]);
+  const navigate = useNavigate();
 
   const selectedProfileId = useSelector(
     (store: RootState) => store.state.selectedProfileId,
@@ -222,6 +224,7 @@ function ProfileSwitcher(props: {}) {
         onClick={() => {
           if (selectedProfileId === "local") {
             ideMessenger.post("openConfigJson", undefined);
+            navigate("/onboarding");
           } else {
             ideMessenger.post(
               "openUrl",
@@ -229,7 +232,7 @@ function ProfileSwitcher(props: {}) {
             );
           }
         }}
-        text="Configure Continue"
+        text="Configure eaCopilot"
       >
         <Cog6ToothIcon width="1.4em" height="1.4em" />
       </HeaderButtonWithText>
