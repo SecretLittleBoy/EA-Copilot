@@ -56,3 +56,37 @@ fun getSessionFilePath(sessionId: String): String {
     }
     return path.toString()
 }
+
+fun devDataPath(): String {
+    val path = Paths.get(getContinueGlobalPath(), "dev_data")
+    if (Files.notExists(path)) {
+        Files.createDirectories(path)
+    }
+    return path.toString()
+}
+
+fun getDevDataFilepath(filename: String): String {
+    val path = Paths.get(devDataPath(), filename)
+    if (Files.notExists(path)) {
+        Files.createFile(path)
+    }
+    return path.toString()
+}
+
+fun getMigrationsFolderPath(): String {
+    val path = Paths.get(getContinueGlobalPath(), ".migrations")
+    if (Files.notExists(path)) {
+        Files.createDirectories(path)
+    }
+    return path.toString()
+}
+
+fun migrate(id: String, callback: () -> Unit) {
+    val migrationsPath = getMigrationsFolderPath()
+    val migrationPath = Paths.get(migrationsPath, id).toString()
+    val migrationFile = File(migrationPath)
+    if (!migrationFile.exists()) {
+        migrationFile.writeText("")
+        callback()
+    }
+}
