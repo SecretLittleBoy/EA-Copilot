@@ -32,6 +32,64 @@ export const FREE_TRIAL_MODELS: ModelDescription[] = [
   },
 ];
 
+export const defaultContextProvidersVsCode: ContextProviderWithParams[] = [
+  { name: "code", params: {} },
+  { name: "docs", params: {} },
+  { name: "diff", params: {} },
+  { name: "terminal", params: {} },
+  { name: "problems", params: {} },
+  { name: "folder", params: {} },
+  { name: "codebase", params: {} },
+];
+
+export const defaultContextProvidersJetBrains: ContextProviderWithParams[] = [
+  { name: "diff", params: {} },
+  { name: "folder", params: {} },
+  { name: "codebase", params: {} },
+];
+
+export const defaultSlashCommandsVscode: SlashCommandDescription[] = [
+  {
+    name: "edit",
+    description: "Edit selected code",
+  },
+  {
+    name: "comment",
+    description: "Write comments for the selected code",
+  },
+  {
+    name: "share",
+    description: "Export the current chat session to markdown",
+  },
+  {
+    name: "cmd",
+    description: "Generate a shell command",
+  },
+  {
+    name: "commit",
+    description: "Generate a git commit message",
+  },
+];
+
+export const defaultSlashCommandsJetBrains = [
+  {
+    name: "edit",
+    description: "Edit selected code",
+  },
+  {
+    name: "comment",
+    description: "Write comments for the selected code",
+  },
+  {
+    name: "share",
+    description: "Export the current chat session to markdown",
+  },
+  {
+    name: "commit",
+    description: "Generate a git commit message",
+  },
+];
+
 export let EA_apiBase = "http://eacopilot.sandbox-prod-eadp-ai-dstack.data.ea.com";
 export let EA_dstackToken = "e52e481a-694e-4ebb-ba17-6a63fa119a51";
 
@@ -76,6 +134,8 @@ export const defaultConfig: SerializedContinueConfig = {
     provider: "ollama",
     model: "deepseek-coder-v2:16b",
   },
+  contextProviders: defaultContextProvidersVsCode,
+  slashCommands: defaultSlashCommandsVscode,
 };
 
 export const defaultConfigJetBrains: SerializedContinueConfig = {
@@ -102,62 +162,6 @@ export const defaultConfigJetBrains: SerializedContinueConfig = {
     "provider": "ollama",
     "model": "nomic-embed-text"
   },
+  contextProviders: defaultContextProvidersJetBrains,
+  slashCommands: defaultSlashCommandsJetBrains,
 };
-
-export const defaultSlashCommandsVscode: SlashCommandDescription[] = [
-  {
-    name: "edit",
-    description: "Edit selected code",
-  },
-  {
-    name: "comment",
-    description: "Write comments for the selected code",
-  },
-  {
-    name: "share",
-    description: "Export the current chat session to markdown",
-  },
-  {
-    name: "cmd",
-    description: "Generate a shell command",
-  },
-  {
-    name: "commit",
-    description: "Generate a git commit message",
-  },
-];
-
-export const defaultSlashCommandsJetBrains = [
-  {
-    name: "edit",
-    description: "Edit selected code",
-  },
-  {
-    name: "comment",
-    description: "Write comments for the selected code",
-  },
-  {
-    name: "share",
-    description: "Export the current chat session to markdown",
-  },
-  {
-    name: "commit",
-    description: "Generate a git commit message",
-  },
-];
-
-export const defaultContextProvidersVsCode: ContextProviderWithParams[] = [
-  { name: "code", params: {} },
-  { name: "docs", params: {} },
-  { name: "diff", params: {} },
-  { name: "terminal", params: {} },
-  { name: "problems", params: {} },
-  { name: "folder", params: {} },
-  { name: "codebase", params: {} },
-];
-
-export const defaultContextProvidersJetBrains: ContextProviderWithParams[] = [
-  { name: "diff", params: {} },
-  { name: "folder", params: {} },
-  { name: "codebase", params: {} },
-];

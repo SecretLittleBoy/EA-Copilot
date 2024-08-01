@@ -15,6 +15,12 @@ class AutocompleteCaretListener: CaretListener {
         val offset = caret.offset
         val editor = caret.editor
         val autocompleteService = editor.project?.service<AutocompleteService>() ?: return
+
+        if (autocompleteService.lastChangeWasPartialAccept) {
+            autocompleteService.lastChangeWasPartialAccept = false
+            return
+        }
+
         val pending = autocompleteService.pendingCompletion;
         if (pending != null && pending.editor == editor && pending.offset == offset) {
             return
@@ -28,10 +34,16 @@ class AutocompleteDocumentListener(private val editorManager: FileEditorManager,
         if (editor != editorManager.selectedTextEditor) {
             return
         }
+
+        val service = editor.project?.service<AutocompleteService>() ?: return
+        if (service.lastChangeWasPartialAccept) {
+            return
+        }
+
         // Invoke later is important, otherwise the completion will be triggered before the document is updated
         // causing the old caret offset to be used
         invokeLater {
-            editor.project?.service<AutocompleteService>()?.triggerCompletion(editor)
+            service.triggerCompletion(editor)
         }
     }
 }
