@@ -1,6 +1,7 @@
 <!-- Plugin description -->
 
-![readme](media/readme.png)
+This is EA Copilot
+<!-- ![readme](media/readme.png)
 
 <h1 align="center">Continue</h1>
 
@@ -46,6 +47,6 @@ Learn more about the models and providers [here](https://continue.dev/docs/setup
 
 ## License
 
-[Apache 2.0 © 2023-2024 Continue Dev, Inc.](./LICENSE)
+[Apache 2.0 © 2023-2024 Continue Dev, Inc.](./LICENSE) -->
 
 <!-- Plugin description end -->

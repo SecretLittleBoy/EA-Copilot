@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.continuedev.continueintellijextension</id>
     <name>EA Copilot</name>
-    <vendor>continue-dev</vendor>
+    <vendor>MarioLong                                                                                                                                                                                                                                                                                  l</vendor>
     <depends>com.intellij.modules.platform</depends>
     <idea-version since-build="223.0"/>
 
