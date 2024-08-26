@@ -1,0 +1,9 @@
+name: generateUnitTest
+description: generate unit test
+---
+
+{{{ input }}}
+
+Write unit tests for the above selected code. 
+If the user already provides a test class, you only need to give new test functions into the test class.
+Do not assume any methods that do not exist, ensure your tests can pass.

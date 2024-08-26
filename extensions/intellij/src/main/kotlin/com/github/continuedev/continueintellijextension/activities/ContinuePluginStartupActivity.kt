@@ -54,6 +54,23 @@ fun showTutorial(project: Project) {
     }
 }
 
+fun checkGlobalPrompt() {
+    val filepath = Paths.get(getContinueGlobalPath(), ".prompts/generateUnitTest.prompt").toString()
+    val targetFile = File(filepath)
+    if (targetFile.exists()) {
+        println("Prompt file exists: $filepath")
+        return
+    }
+    targetFile.parentFile?.mkdirs()
+    ContinuePluginStartupActivity::class.java.getClassLoader().getResourceAsStream("generateUnitTest.prompt").use { `is` ->
+        if (`is` == null) {
+            throw IOException("Resource not found: generateUnitTest.prompt")
+        }
+        val content = `is`.bufferedReader(StandardCharsets.UTF_8).use { it.readText() }
+        targetFile.writeText(content)
+    }
+}
+
 class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -110,7 +127,7 @@ class ContinuePluginStartupActivity : StartupActivity, Disposable, DumbAware {
                 showTutorial(project)
                 settings.continueState.shownWelcomeDialog = true
             }
-
+            checkGlobalPrompt()
             val ideProtocolClient = IdeProtocolClient(
                 continuePluginService,
                 defaultStrategy,
