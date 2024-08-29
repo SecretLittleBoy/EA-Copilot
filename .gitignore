@@ -167,3 +167,6 @@ Icon?
 
 # Sandbox env default file
 extensions/vscode/manual-testing-sandbox/example.ts
+
+docs/.idea/*
+extensions/intellij/bin

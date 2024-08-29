@@ -1,7 +1,7 @@
 {
   "name": "continue",
   "icon": "media/icon.png",
-  "version": "0.8.44",
+  "version": "1.8.44",
   "repository": {
     "type": "git",
     "url": "https://github.com/SecretLittleBoy/EA-Copilot"
@@ -576,6 +576,7 @@
     "@vscode/ripgrep": "^1.15.9",
     "@vscode/test-electron": "^2.3.9",
     "axios": "^1.2.5",
+    "continue": "file:",
     "core": "file:../../core",
     "cors": "^2.8.5",
     "dbinfoz": "^0.1.4",
